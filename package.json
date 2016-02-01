@@ -1,0 +1,20 @@
+{
+  "name": "deep-lohm",
+  "version": "0.0.1",
+  "description": "Displays Planes on Global map",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "personal"
+  ],
+  "author": "hjri",
+  "license": "ISC",
+  "dependencies": {
+    "electron-prebuilt": "^0.36.7"
+  },
+  "devDependencies": {
+    "jade": "^1.11.0"
+  }
+}

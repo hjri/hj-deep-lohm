@@ -1,0 +1,22 @@
+(
+ :root-dir "/home/houka/gits/deep-lohm"
+ :cache-dir "/home/houka/gits/deep-lohm/.ensime_cache"
+ :name "deep-lohm"
+ :java-home "/usr/lib/jvm/java-8-openjdk-amd64"
+ :java-flags ("-Dawt.useSystemAAFontSettings=on" "-XX:MaxMetaspaceSize=256m" "-XX:ReservedCodeCacheSize=128m" "-Xms1024m" "-Xmx1024m" "-Xss2m")
+ :reference-source-roots ("/usr/lib/jvm/java-8-openjdk-amd64/src.zip")
+ :scala-version "2.11.7"
+ :compiler-args ("-Xfuture" "-Xlint" "-Xplugin:/home/houka/.ivy2/cache/org.scala-js/scalajs-compiler_2.11.7/jars/scalajs-compiler_2.11.7-0.6.6.jar" "-Yinline-warnings" "-Yno-adapted-args" "-Ywarn-dead-code" "-Ywarn-numeric-widen" "-Ywarn-unused-import" "-deprecation" "-feature")
+ :formatting-prefs nil
+ :subprojects ((
+   :name "deep-lohm"
+   :source-roots ("/home/houka/gits/deep-lohm/src/scalajs")
+   :targets ("/home/houka/gits/deep-lohm/target/scala-2.11/classes")
+   :test-targets ("/home/houka/gits/deep-lohm/target/scala-2.11/test-classes")
+   :depends-on-modules nil
+   :compile-deps ("/home/houka/.ivy2/cache/org.scala-js/scalajs-dom_sjs0.6_2.11/jars/scalajs-dom_sjs0.6_2.11-0.8.2.jar" "/home/houka/.ivy2/cache/org.scala-js/scalajs-library_2.11/jars/scalajs-library_2.11-0.6.6.jar" "/home/houka/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.7.jar" "/home/houka/.ivy2/cache/org.singlespaced/scalajs-d3_sjs0.6_2.11/jars/scalajs-d3_sjs0.6_2.11-0.2.0.jar" "/home/houka/.ivy2/cache/org.webjars/d3js/jars/d3js-3.5.12.jar")
+   :runtime-deps nil
+   :test-deps ("/home/houka/.ivy2/cache/com.lihaoyi/utest_sjs0.6_2.11/jars/utest_sjs0.6_2.11-0.3.0.jar" "/home/houka/.ivy2/cache/org.scala-js/scalajs-test-interface_2.11/jars/scalajs-test-interface_2.11-0.6.0.jar" "/home/houka/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.4.jar")
+   :doc-jars ("/home/houka/.ivy2/cache/com.lihaoyi/utest_sjs0.6_2.11/docs/utest_sjs0.6_2.11-0.3.0-javadoc.jar" "/home/houka/.ivy2/cache/org.scala-js/scalajs-dom_sjs0.6_2.11/docs/scalajs-dom_sjs0.6_2.11-0.8.2-javadoc.jar" "/home/houka/.ivy2/cache/org.scala-js/scalajs-library_2.11/docs/scalajs-library_2.11-0.6.6-javadoc.jar" "/home/houka/.ivy2/cache/org.scala-js/scalajs-test-interface_2.11/docs/scalajs-test-interface_2.11-0.6.0-javadoc.jar" "/home/houka/.ivy2/cache/org.scala-lang/scala-library/docs/scala-library-2.11.7-javadoc.jar" "/home/houka/.ivy2/cache/org.scala-lang/scala-reflect/docs/scala-reflect-2.11.4-javadoc.jar" "/home/houka/.ivy2/cache/org.singlespaced/scalajs-d3_sjs0.6_2.11/docs/scalajs-d3_sjs0.6_2.11-0.2.0-javadoc.jar" "/home/houka/gits/deep-lohm/target/scala-2.11/deep-lohm-scalajs-code_sjs0.6_2.11-0.1-SNAPSHOT-javadoc.jar")
+   :reference-source-roots ("/home/houka/.ivy2/cache/com.lihaoyi/utest_sjs0.6_2.11/srcs/utest_sjs0.6_2.11-0.3.0-sources.jar" "/home/houka/.ivy2/cache/org.scala-js/scalajs-dom_sjs0.6_2.11/srcs/scalajs-dom_sjs0.6_2.11-0.8.2-sources.jar" "/home/houka/.ivy2/cache/org.scala-js/scalajs-library_2.11/srcs/scalajs-library_2.11-0.6.6-sources.jar" "/home/houka/.ivy2/cache/org.scala-js/scalajs-test-interface_2.11/srcs/scalajs-test-interface_2.11-0.6.0-sources.jar" "/home/houka/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.11.7-sources.jar" "/home/houka/.ivy2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.11.4-sources.jar" "/home/houka/.ivy2/cache/org.singlespaced/scalajs-d3_sjs0.6_2.11/srcs/scalajs-d3_sjs0.6_2.11-0.2.0-sources.jar" "/home/houka/.ivy2/cache/org.webjars/d3js/srcs/d3js-3.5.12-sources.jar")))
+)
