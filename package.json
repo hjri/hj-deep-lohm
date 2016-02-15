@@ -12,13 +12,25 @@
   "author": "hjri",
   "license": "ISC",
   "dependencies": {
-    "electron-prebuilt": "^0.36.7"
+    "electron-prebuilt": "^0.36.7",
+    "lodash": "^4.3.0",
+    "normalize.css": "^3.0.3",
+    "topojson": "^1.6.24"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/hjri/hj-deep-lohm.git"
-  }
+  },
   "devDependencies": {
-    "jade": "^1.11.0"
+    "coffee": "^3.0.3",
+    "gulp": "^3.9.1",
+    "gulp-coffee": "^2.3.1",
+    "gulp-jade": "^1.1.0",
+    "gulp-postcss": "^6.1.0",
+    "gulp-watch": "^4.3.5",
+    "jade": "^1.11.0",
+    "postcss-cli": "^2.5.1",
+    "postcss-scss": "^0.1.5",
+    "precss": "^1.4.0"
   }
 }

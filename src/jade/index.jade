@@ -1,20 +1,23 @@
 doctype html
 html(lang="en")
   head
+    meta(charset="utf-8")
     title= pageTitle
-    script(type='text/javascript' src='deps.js').
-    script(type='text/javascript' src='main.js').
-    script(type='text/javascript' src='launcher.js').
-    link(type='stylesheet' href='style.css').
+    link(rel='stylesheet' href='../libs_client/normalize.css'). 
+    link(rel='stylesheet' href='app.css').
   body
-    h1 Jade - node template engine
-    #container.col
-      if youAreUsingJade
-        p You are amazing
-      else
-        p Get on it!
-      p.
-        Jade is a terse and simple
-        templating language with a
-        strong focus on performance
-        and powerful features.
+    .fullscreen
+      .map#map
+      .hud#hud
+    // script(type='text/javascript' src='deep-lohm-scalajs-code-jsdeps.js').
+    
+    script(type='text/javascript' src='../libs_client/d3.js').
+    script(type='text/javascript').
+      // D3 hack to be global
+      if (typeof module === "object") { window.d3 = module.exports; }
+      
+    script(type='text/javascript' src='../libs_client/topojson.js').
+    // script(type='text/javascript' src='deep-lohm-scalajs-code-fastopt.js').
+    // script(type='text/javascript' src='deep-lohm-scalajs-code-launcher.js').
+    // script(type='text/javascript' src='app.js').
+    script(type='text/javascript' src='index.js').
