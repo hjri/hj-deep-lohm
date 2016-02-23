@@ -8,14 +8,81 @@ var width = 960,
     .clipAngle(90),
 
     area = d3.geo.path()
-        .projection(projection),
+    .projection(projection),
 
     land = d3.geo.path()
     .projection(projection),
 
+    objects = [],
+
     svg = d3.select('#map').append('svg')
     .attr('width', width)
     .attr('height', height),
+
+    addObject = function(name, type, direction, speed, alt) {},
+
+    processObject = function(obj) {
+        obj.loc = _.zipWith(calcDirection(obj.dir, obj.speed), obj.loc, function(a, b) {
+            return a + b;
+        });
+        obj.xy = projection(obj.loc);
+        return obj;
+    },
+
+    begin = function() {
+        objects.push({
+            loc: [0, 20],
+            dir: 0,
+            speed: 0.2
+        });
+        objects.push({
+            loc: [55, 30],
+            dir: 90,
+            speed: 0.1
+        });
+        setInterval(function() {
+            var us = objects[0],
+                usLoc = us.loc;
+
+            rotate([usLoc[1], usLoc[0]]);
+            objects = objects.map(function(o) {
+                return processObject(o);
+            });
+            objects[0].dir = objects[0].dir + 1
+        }, 20);
+    },
+
+    renderObjects = function(objects) {
+        var object = svg.selectAll('.object')
+            .data(objects);
+
+        var grp = object.enter()
+            .append('svg')
+            .classed('object', true)
+            .attr('viewbox', '-30 -30 300 300');
+        grp.append('text')
+            .classed('icon', true)
+            .attr('text-anchor', 'middle')
+            .attr('dominant-baseline', 'central')
+            .attr('font-family', 'FontAwesome')
+            .attr('font-size', '20px')
+            .attr('x', 16)
+            .attr('y', 16)
+            .text('\uf072');
+
+        object.select('.icon')
+            .attr('transform', function(d) {
+                return 'rotate(' + (-d.dir + 45) + ' 16,16)';
+            });
+
+        object
+            .attr('x', function(d) {
+                return d.xy && d.xy[0] - 8;
+            })
+            .attr('y', function(d) {
+                return d.xy && d.xy[1] - 8;
+            });
+    },
 
     rotate = function(coords) {
         projection.rotate([-coords[1], -coords[0]]);
@@ -30,8 +97,26 @@ var width = 960,
     render = function() {
         svg.selectAll('.land').attr('d', land);
         svg.selectAll('.area')
-            .datum({ type: "LineString", coordinates: calcArea(currentPos, 400 * 1000)})
+            .datum({
+                type: "LineString",
+                coordinates: calcArea(currentPos, 400 * 1000)
+            })
             .attr('d', area);
+        renderObjects(objects);
+    },
+
+    toDegrees = function(angle) {
+        return angle * (180 / Math.PI);
+    },
+    toRadians = function(angle) {
+        return angle * (Math.PI / 180);
+    },
+
+    calcDirection = function(course, speed) {
+        var courseDeg = toRadians(course),
+            latComp = Math.sin(courseDeg),
+            lonComp = Math.cos(courseDeg);
+        return [lonComp * speed, latComp * speed];
     },
 
     calcPoint = function(coords, offset) {
@@ -41,12 +126,17 @@ var width = 960,
             dLat = offset[0] / R,
             dLon = offset[1] / (R * Math.cos(Math.PI * lat / 180));
 
-        return [(lon + dLon * 180 / Math.PI ), (lat + dLat * 180 / Math.PI)];
+        return [(lon + dLon * 180 / Math.PI), (lat + dLat * 180 / Math.PI)];
     },
 
     calcArea = function(coords, range) {
-        return [[range,range],[range,-range],[-range,-range],[-range,range]].map(function(point) {
-            return calcPoint(coords,point);
+        return [
+            [range, range],
+            [range, -range],
+            [-range, -range],
+            [-range, range]
+        ].map(function(point) {
+            return calcPoint(coords, point);
         });
     },
 
@@ -63,8 +153,11 @@ d3.json('../libs_client/world-110m.json', function(error, world) {
         .attr('class', 'land')
         .attr('d', land);
     svg.append('path')
-        .datum({ type: "LineString", coordinates: calcArea(currentPos, 400 * 1000)})
-        .attr('class','area')
+        .datum({
+            type: "LineString",
+            coordinates: calcArea(currentPos, 400 * 1000)
+        })
+        .attr('class', 'area')
         .attr('d', area);
 
 });

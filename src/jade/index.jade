@@ -4,6 +4,7 @@ html(lang="en")
     meta(charset="utf-8")
     title= pageTitle
     link(rel='stylesheet' href='../libs_client/normalize.css'). 
+    link(rel='stylesheet' href='../libs_client/fa.css'). 
     link(rel='stylesheet' href='app.css').
   body
     .fullscreen
@@ -17,6 +18,7 @@ html(lang="en")
       if (typeof module === "object") { window.d3 = module.exports; }
       
     script(type='text/javascript' src='../libs_client/topojson.js').
+    script(type='text/javascript' src='../libs_client/lodash.js').
     // script(type='text/javascript' src='deep-lohm-scalajs-code-fastopt.js').
     // script(type='text/javascript' src='deep-lohm-scalajs-code-launcher.js').
     // script(type='text/javascript' src='app.js').

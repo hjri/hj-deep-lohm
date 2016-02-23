@@ -46,3 +46,5 @@ node_modules
 # Scala
 target
 .ensime_cache
+
+build/*
