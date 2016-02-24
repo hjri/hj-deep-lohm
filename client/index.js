@@ -1,7 +1,5 @@
 /* global d3 */
-var width = 960,
-    height = 500,
-    currentPos = [55.755347, 37.711664],
+var startingPos = [55.755347, 37.711664],
 
     projection = d3.geo.orthographic()
     .scale(250)
@@ -13,13 +11,11 @@ var width = 960,
     land = d3.geo.path()
     .projection(projection),
 
-    objects = [],
-
     svg = d3.select('#map').append('svg')
-    .attr('width', width)
-    .attr('height', height),
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", "0 0 960 500"),
 
-    addObject = function(name, type, direction, speed, alt) {},
+    objects = [],
 
     processObject = function(obj) {
         obj.loc = _.zipWith(calcDirection(obj.dir, obj.speed), obj.loc, function(a, b) {
@@ -31,7 +27,7 @@ var width = 960,
 
     begin = function() {
         objects.push({
-            loc: [0, 20],
+            loc: startingPos,
             dir: 0,
             speed: 0.2
         });
@@ -48,7 +44,6 @@ var width = 960,
             objects = objects.map(function(o) {
                 return processObject(o);
             });
-            objects[0].dir = objects[0].dir + 1
         }, 20);
     },
 
@@ -60,6 +55,7 @@ var width = 960,
             .append('svg')
             .classed('object', true)
             .attr('viewbox', '-30 -30 300 300');
+
         grp.append('text')
             .classed('icon', true)
             .attr('text-anchor', 'middle')
@@ -99,7 +95,7 @@ var width = 960,
         svg.selectAll('.area')
             .datum({
                 type: "LineString",
-                coordinates: calcArea(currentPos, 400 * 1000)
+                coordinates: calcArea(startingPos, 400 * 1000)
             })
             .attr('d', area);
         renderObjects(objects);
@@ -108,6 +104,7 @@ var width = 960,
     toDegrees = function(angle) {
         return angle * (180 / Math.PI);
     },
+
     toRadians = function(angle) {
         return angle * (Math.PI / 180);
     },
@@ -141,8 +138,8 @@ var width = 960,
     },
 
     update = function(newPos) {
-        currentPos = newPos;
-        rotate(currentPos);
+        startingPos = newPos;
+        rotate(startingPos);
     };
 
 
@@ -155,11 +152,11 @@ d3.json('../libs_client/world-110m.json', function(error, world) {
     svg.append('path')
         .datum({
             type: "LineString",
-            coordinates: calcArea(currentPos, 400 * 1000)
+            coordinates: calcArea(startingPos, 400 * 1000)
         })
         .attr('class', 'area')
         .attr('d', area);
 
 });
 
-rotate(currentPos);
+rotate(startingPos);
