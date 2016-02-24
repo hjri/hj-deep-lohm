@@ -1,5 +1,5 @@
 body {
-    background-color: #beba81
+    background-color: #ECDDD6
 }
 
 .fullscreen, .map, .hud {
@@ -13,12 +13,15 @@ body {
 .map {
     z-index: 100;
     .land {
-        fill: #b07760
+        fill: #735451
     }
     .area {
         fill: magenta
     }
                  
+    .icon {
+        fill: #292023
+    }
 }
 .hud {
     z-index: 200
