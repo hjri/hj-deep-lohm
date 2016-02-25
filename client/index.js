@@ -1,5 +1,6 @@
 /* global d3 */
 var startingPos = [55.755347, 37.711664],
+    R = 6378137,
 
     projection = d3.geo.orthographic()
     .scale(250)
@@ -12,8 +13,8 @@ var startingPos = [55.755347, 37.711664],
     .projection(projection),
 
     svg = d3.select('#map').append('svg')
-        .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 960 500"),
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox", "0 0 960 500"),
 
     objects = [],
 
@@ -27,14 +28,16 @@ var startingPos = [55.755347, 37.711664],
 
     begin = function() {
         objects.push({
-            loc: startingPos,
+            loc: [startingPos[1], startingPos[0]],
             dir: 0,
-            speed: 0.2
+            speed: 0.001,
+            id: 'A321'
         });
         objects.push({
-            loc: [55, 30],
+            loc: [37.711664 , 55.755347 ],
             dir: 90,
-            speed: 0.1
+            speed: 0.01,
+            id: 'B17 Bomber'
         });
         setInterval(function() {
             var us = objects[0],
@@ -56,6 +59,14 @@ var startingPos = [55.755347, 37.711664],
             .classed('object', true)
             .attr('viewbox', '-30 -30 300 300');
 
+        object
+            .classed('outOfRange', function(d) {
+                return d === objects[0] ? false : calcDistanceMeters(toD3Geo(d.loc), toD3Geo(objects[0].loc)) > 400000;
+            })
+            .classed('hidden', function(d) {
+                return d === objects[0] ? false : calcDistanceMeters(toD3Geo(d.loc), toD3Geo(objects[0].loc)) > 1200000;
+            })
+
         grp.append('text')
             .classed('icon', true)
             .attr('text-anchor', 'middle')
@@ -65,6 +76,15 @@ var startingPos = [55.755347, 37.711664],
             .attr('x', 16)
             .attr('y', 16)
             .text('\uf072');
+
+        grp.append('text')
+            .classed('icon', true)
+            .attr('font-size', '20px')
+            .attr('x', 8)
+            .attr('y', 48)
+            .text(function(d, i) {
+                return d.id;
+            });
 
         object.select('.icon')
             .attr('transform', function(d) {
@@ -116,9 +136,22 @@ var startingPos = [55.755347, 37.711664],
         return [lonComp * speed, latComp * speed];
     },
 
+    calcRadius = function(coords, range) {
+        var nextPoint = calcPoint(coords, [0, range]);
+
+        debugger;
+    },
+
+    toD3Geo = function(coords) {
+        return [coords[1], coords[0]];
+    },
+
+    calcDistanceMeters = function(a, b) {
+        return d3.geo.distance(a, b) * R;
+    },
+
     calcPoint = function(coords, offset) {
-        var R = 6378137,
-            lat = coords[0],
+        var lat = coords[0],
             lon = coords[1],
             dLat = offset[0] / R,
             dLon = offset[1] / (R * Math.cos(Math.PI * lat / 180));
@@ -160,3 +193,4 @@ d3.json('../libs_client/world-110m.json', function(error, world) {
 });
 
 rotate(startingPos);
+begin();

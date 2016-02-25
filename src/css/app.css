@@ -22,6 +22,14 @@ body {
     .icon {
         fill: #292023
     }
+    .object {
+        &.outOfRange {
+            opacity: .5
+        }
+        &.hidden {
+            display: none
+        }
+    }
 }
 .hud {
     z-index: 200
