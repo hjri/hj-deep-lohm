@@ -10,6 +10,9 @@
 \usepackage{graphicx}
 \usepackage{titlesec}
 \usepackage{listingsutf8}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{mathtools}
 \renewcommand{\baselinestretch}{1.5} 
 \usepackage[russian]{babel}
 \setcounter{secnumdepth}{5}
@@ -40,19 +43,19 @@
 }
 
 \lstset{
-   language=JavaScript,
-   backgroundcolor=\color{lightgray},
-   extendedchars=true,
-   basicstyle=\footnotesize\ttfamily,
-   showstringspaces=false,
-   showspaces=false,
-   numbers=left,
-   numberstyle=\footnotesize,
-   numbersep=9pt,
-   tabsize=2,
-   breaklines=true,
-   showtabs=false,
-   captionpos=b
+  language=JavaScript,
+  backgroundcolor=\color{lightgray},
+  extendedchars=true,
+  basicstyle=\footnotesize\ttfamily,
+  showstringspaces=false,
+  showspaces=false,
+  numbers=left,
+  numberstyle=\footnotesize,
+  numbersep=9pt,
+  tabsize=2,
+  breaklines=true,
+  showtabs=false,
+  captionpos=b
 }
 
 \usepackage{geometry} % Меняем поля страницы
@@ -178,8 +181,8 @@ Mode S, работающий на частотах 978МГц или 1090МГц. 
 \item поддержка протоколов взаимодействия между объектами;
 \item хранение текущего образа сети и его обновление;
 \item формирование, хранение, доставку, поиск объекта назначения, маршрутизацию,
- коммутацию, контроль факта доставки и целостности пакета, включая пакеты
- передачи речи в цифровой форме;
+  коммутацию, контроль факта доставки и целостности пакета, включая пакеты
+  передачи речи в цифровой форме;
 \item вычисление расстояния между объектами по их координатным данным и времени
   распространения сигнала;
 \end{itemize}
@@ -390,7 +393,48 @@ Firefox, Chrome, Safari, но в целях удобства и потенциа
 воздействия на человека. ЭЛТ мониторы, несомненно куда гораздо больше наносят
 вреда нежели ЖК, но на данный момент они практически вышли из эксплуатации
 повсеместно и встретить их можно только на очень старых ПК, которые не
-обновлялись уже несколько поколений
+обновлялись уже несколько поколений.
+
+\section{Расчет уровня шума}
+Расчитаем уровень шума, производимого оборудованием, на котором установлена
+система индикации. Для примера возьмем типичный ПК в форм-факторе mirco-tower.
+
+Комплектующие:
+\begin{itemize}
+\item{Блок Питания} 430W Corsair CX430M (CP-9020058-EU)
+\item{Жесткий диск} 3Tb SATA-III Western Digital Red (WD30EFRX)	
+\item{Корпус (плюс вентилятор)}Fractal Design Node 304 Black
+\item{Память} 8Gb DDR-III 1600MHz Kingston SO-DIMM (KVR16LS11/8)
+\item{Материнская плата + процессор + радиатор} ASUS J1900I-C + Celeron J1900 onboard
+\end{itemize}
+
+Основные источники шума в ПК - подвижные части - считывающие головки и мотор
+жесткого диска, вентиляторы системы охлаждения. Данная конфигурация отличается
+некоторыми особенностями:
+
+\begin{enumerate}
+\item корпус оборудован переключателем скорости вентилятора
+  на корпусе с возможностью выбрать меджу тремя скоростями, для простоты вещей
+  будем считать что установлена максимальная скорость.
+\item на процессоре нет вентилятора, только радиатор. Охлаждение осуществляется
+  засчет конвекции воздуха посредством вентиляторов на корпусе.
+\end{enumerate}
+
+\subsection{Исходные данные и решение}
+Основные источники шума:
+\begin{itemize}
+\item 2 вентилятора 92мм на корпусе спереди 18.3 дБ \\
+\url{http://www.fractal-design.com/home/product/casefans/silent-series-r3/silent-series-r3-92mm}
+\item 1 вентилятор 140мм на корпусе сзади 21.6 дБ \\
+\url{http://www.fractal-design.com/home/product/casefans/silent-series-r3/silent-series-r3-140mm}
+\item 1 жесткий диск (в режиме чтения, среднее значение) 24 дБ \\
+\url{http://www.wdc.com/global/products/specs/?driveID=1087&language=1}
+\end{itemize}
+
+Найдем суммарную интенсивность шума:
+
+$L_\Sigma =  10 \cdot \lg (10^{1.83} + 10^{1.83} + 10^{2.16} + 10^{2.4}) =
+27.25052$ дБ
 \newpage
 \chapter{Технико-экономическеой обоснование. Сравнение системы индиации с
   аналогами с помощью метода анализа иерархий} %8 pages
