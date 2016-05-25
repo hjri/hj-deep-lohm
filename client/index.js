@@ -30,14 +30,32 @@ var startingPos = [55.755347, 37.711664],
         objects.push({
             loc: [startingPos[1], startingPos[0]],
             dir: 0,
-            speed: 0.001,
-            id: 'A321'
+            speed: 0.01,
+            id: 'Us'
         });
         objects.push({
             loc: [37.711664 , 55.755347 ],
             dir: 90,
-            speed: 0.01,
-            id: 'B17 Bomber'
+            speed: 0.02,
+            id: 'Test Plane 1'
+        });
+        objects.push({
+            loc: [startingPos[1]+11.11, startingPos[0]+2.01],
+            dir: 180,
+            speed: 0.03,
+            id: 'Test Plane 2'
+        });
+        objects.push({
+            loc: [startingPos[1]+6.11, startingPos[0]-1.01],
+            dir: 125,
+            speed: 0.03,
+            id: 'Test Plane 3'
+        });
+        objects.push({
+            loc: [startingPos[1]-6.41, startingPos[0]-0.01],
+            dir: 23,
+            speed: 0.03,
+            id: 'Test Plane 4'
         });
         setInterval(function() {
             var us = objects[0],
@@ -54,6 +72,8 @@ var startingPos = [55.755347, 37.711664],
         var object = svg.selectAll('.object')
             .data(objects);
 
+        var circle = svg.selectAll('.circle');
+
         var grp = object.enter()
             .append('svg')
             .classed('object', true)
@@ -65,7 +85,7 @@ var startingPos = [55.755347, 37.711664],
             })
             .classed('hidden', function(d) {
                 return d === objects[0] ? false : calcDistanceMeters(toD3Geo(d.loc), toD3Geo(objects[0].loc)) > 1200000;
-            })
+            });
 
         grp.append('text')
             .classed('icon', true)
@@ -93,10 +113,21 @@ var startingPos = [55.755347, 37.711664],
 
         object
             .attr('x', function(d) {
-                return d.xy && d.xy[0] - 8;
+                return d.xy && d.xy[0] - 16;
             })
             .attr('y', function(d) {
-                return d.xy && d.xy[1] - 8;
+                return d.xy && d.xy[1] - 16;
+            });
+
+        circle.append('circle')
+            .attr('r', 500);
+
+        circle
+            .attr('cx', function(d) {
+                return objects[0].xy && objects[0].xy[0];
+            })
+            .attr('cy', function(d) {
+                return objects[0].xy && objects[0].xy[1];
             });
     },
 
@@ -112,12 +143,12 @@ var startingPos = [55.755347, 37.711664],
 
     render = function() {
         svg.selectAll('.land').attr('d', land);
-        svg.selectAll('.area')
-            .datum({
-                type: "LineString",
-                coordinates: calcArea(startingPos, 400 * 1000)
-            })
-            .attr('d', area);
+        // svg.selectAll('.area')
+            // .datum({
+                // type: "LineString",
+                // coordinates: calcArea(startingPos, 400 * 1000)
+            // })
+            // .attr('d', area);
         renderObjects(objects);
     },
 
@@ -182,15 +213,19 @@ d3.json('../libs_client/world-110m.json', function(error, world) {
         .datum(topojson.feature(world, world.objects.land))
         .attr('class', 'land')
         .attr('d', land);
-    svg.append('path')
-        .datum({
-            type: "LineString",
-            coordinates: calcArea(startingPos, 400 * 1000)
-        })
-        .attr('class', 'area')
-        .attr('d', area);
+    svg.append('circle')
+        .attr('class', 'circle')
+        .attr('r', '100');
+    // svg.append('path')
+    //     .datum({
+    //         type: "LineString",
+    //         coordinates: calcArea(startingPos, 400 * 1000)
+    //     })
+    //     .attr('class', 'area')
+    //     .attr('d', area);
 
 });
 
 rotate(startingPos);
+scale(2000)
 begin();
